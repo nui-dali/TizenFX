@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright(c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  *
  */
 using System;
+using System.ComponentModel;
 using Tizen.NUI.Binding;
 
 namespace Tizen.NUI
@@ -24,23 +25,9 @@ namespace Tizen.NUI
     /// A two-dimensional vector.
     /// </summary>
     /// <since_tizen> 3 </since_tizen>
-    [TypeConverter(typeof(Vector2TypeConverter))]
-    public class Vector2 : global::System.IDisposable
+    [Binding.TypeConverter(typeof(Vector2TypeConverter))]
+    public class Vector2 : Disposable
     {
-        /// <summary>
-        /// swigCMemOwn.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        protected bool swigCMemOwn;
-
-        /// <summary>
-        /// A Flat to check if it is already disposed.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        protected bool disposed = false;
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
-        //A Flag to check who called Dispose(). (By User or DisposeQueue)
-        private bool isDisposeQueued = false;
 
         /// <summary>
         /// The default constructor initializes the vector to 0.
@@ -73,6 +60,15 @@ namespace Tizen.NUI
         }
 
         /// <summary>
+        /// The copy constructor.
+        /// </summary>
+        /// <param name="other">The copy target.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Vector2(Vector2 other) : this(other.X, other.Y)
+        {
+        }
+
+        /// <summary>
         /// The constructor.
         /// </summary>
         /// <param name="vec3">Vector3 to create this vector from.</param>
@@ -92,24 +88,22 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        internal Vector2(global::System.IntPtr cPtr, bool cMemoryOwn)
+        internal Vector2(global::System.IntPtr cPtr, bool cMemoryOwn) : base(cPtr, cMemoryOwn)
         {
-            swigCMemOwn = cMemoryOwn;
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
         }
 
-        /// <summary>
-        /// Destructor.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        ~Vector2()
+        internal Vector2(Vector2ChangedCallback cb, float x, float y) : this(Interop.Vector2.new_Vector2__SWIG_1(x, y), true)
         {
-            if(!isDisposeQueued)
-            {
-                isDisposeQueued = true;
-                DisposeQueue.Instance.Add(this);
-            }
+            callback = cb;
+            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
+
+        internal Vector2(Vector2ChangedCallback cb, Vector2 other) : this(cb, other.X, other.Y)
+        {
+        }
+
+        internal delegate void Vector2ChangedCallback(float x, float y);
+        private Vector2ChangedCallback callback = null;
 
         /// <summary>
         /// (1.0f,1.0f).
@@ -205,12 +199,17 @@ namespace Tizen.NUI
         /// The x component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector2(...) constructor")]
         public float X
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector2(...) constructor");
+
                 Interop.Vector2.Vector2_X_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y);
             }
             get
             {
@@ -224,12 +223,17 @@ namespace Tizen.NUI
         /// The width.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector2(...) constructor")]
         public float Width
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector2(...) constructor");
+
                 Interop.Vector2.Vector2_Width_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y);
             }
             get
             {
@@ -243,12 +247,17 @@ namespace Tizen.NUI
         /// The y component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector2(...) constructor")]
         public float Y
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector2(...) constructor");
+
                 Interop.Vector2.Vector2_Y_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y);
             }
             get
             {
@@ -262,12 +271,17 @@ namespace Tizen.NUI
         /// The height.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector2(...) constructor")]
         public float Height
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector2(...) constructor");
+
                 Interop.Vector2.Vector2_Height_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y);
             }
             get
             {
@@ -448,29 +462,6 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        /// <summary>
-        /// Dispose.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        public void Dispose()
-        {
-            //Throw excpetion if Dispose() is called in separate thread.
-            if (!Window.IsInstalled())
-            {
-                throw new System.InvalidOperationException("This API called from separate thread. This API must be called from MainThread.");
-            }
-
-            if (isDisposeQueued)
-            {
-                Dispose(DisposeTypes.Implicit);
-            }
-            else
-            {
-                Dispose(DisposeTypes.Explicit);
-                System.GC.SuppressFinalize(this);
-            }
-        }
-
         internal static Vector2 GetVector2FromPtr(global::System.IntPtr cPtr)
         {
             Vector2 ret = new Vector2(cPtr, false);
@@ -491,39 +482,11 @@ namespace Tizen.NUI
             return ret;
         }
 
-        /// <summary>
-        /// Dispose.
-        /// </summary>
-        /// <param name="type">The dispose type</param>
-        /// <since_tizen> 3 </since_tizen>
-        protected virtual void Dispose(DisposeTypes type)
+        /// This will not be public opened.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (type == DisposeTypes.Explicit)
-            {
-                //Called by User
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //because the execution order of Finalizes is non-deterministic.
-
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                if (swigCMemOwn)
-                {
-                    swigCMemOwn = false;
-                    Interop.Vector2.delete_Vector2(swigCPtr);
-                }
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-            disposed = true;
+            Interop.Vector2.delete_Vector2(swigCPtr);
         }
 
         private Vector2 Add(Vector2 rhs)

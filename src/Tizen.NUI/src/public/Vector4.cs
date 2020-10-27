@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright(c) 2019 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  *
  */
 using System;
+using System.ComponentModel;
 using Tizen.NUI.Binding;
 
 namespace Tizen.NUI
@@ -24,24 +25,9 @@ namespace Tizen.NUI
     /// A four-dimensional vector.
     /// </summary>
     /// <since_tizen> 3 </since_tizen>
-    [TypeConverter(typeof(Vector4TypeConverter))]
-    public class Vector4 : global::System.IDisposable
+    [Binding.TypeConverter(typeof(Vector4TypeConverter))]
+    public class Vector4 : Disposable
     {
-        /// <summary>
-        /// swigCMemOwn.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        protected bool swigCMemOwn;
-
-        /// <summary>
-        /// A Flat to check if it is already disposed.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        protected bool disposed = false;
-
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
-        //A Flag to check who called Dispose(). (By User or DisposeQueue)
-        private bool isDisposeQueued = false;
 
         /// <summary>
         /// The default constructor initializes the vector to 0.
@@ -95,24 +81,17 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        internal Vector4(global::System.IntPtr cPtr, bool cMemoryOwn)
+        internal Vector4(global::System.IntPtr cPtr, bool cMemoryOwn) : base(cPtr, cMemoryOwn)
         {
-            swigCMemOwn = cMemoryOwn;
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
         }
 
-        /// <summary>
-        /// Destructor.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        ~Vector4()
+        internal Vector4(Vector4ChangedCallback cb, float x, float y, float z, float w) : this(Interop.Vector4.new_Vector4__SWIG_1(x, y, z, w), true)
         {
-            if(!isDisposeQueued)
-            {
-                isDisposeQueued = true;
-                DisposeQueue.Instance.Add(this);
-            }
+            callback = cb;
+            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
+        internal delegate void Vector4ChangedCallback(float x, float y, float z, float w);
+        private Vector4ChangedCallback callback = null;
 
         /// <summary>
         /// (1.0f,1.0f,1.0f,1.0f).
@@ -193,12 +172,17 @@ namespace Tizen.NUI
         /// The x component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float X
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_X_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -212,12 +196,17 @@ namespace Tizen.NUI
         /// The red component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float R
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_r_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -231,12 +220,17 @@ namespace Tizen.NUI
         /// The s component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float S
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_s_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -250,12 +244,17 @@ namespace Tizen.NUI
         /// The y component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float Y
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_Y_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -269,12 +268,17 @@ namespace Tizen.NUI
         /// The green component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float G
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_g_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -288,12 +292,17 @@ namespace Tizen.NUI
         /// The t component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float T
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_t_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -307,12 +316,17 @@ namespace Tizen.NUI
         /// The z component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float Z
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_Z_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -326,12 +340,17 @@ namespace Tizen.NUI
         /// The blue component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float B
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_b_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -345,12 +364,17 @@ namespace Tizen.NUI
         /// The p component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float P
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_p_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -364,12 +388,17 @@ namespace Tizen.NUI
         /// The w component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float W
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_W_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -383,12 +412,17 @@ namespace Tizen.NUI
         /// The alpha component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float A
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_a_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -402,12 +436,17 @@ namespace Tizen.NUI
         /// The q component.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete("Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor")]
         public float Q
         {
             set
             {
+                Tizen.Log.Fatal("NUI", "Please do not use this setter, Deprecated in API8, will be removed in API10. please use new Vector4(...) constructor");
+
                 Interop.Vector4.Vector4_q_set(swigCPtr, value);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+
+                callback?.Invoke(X, Y, Z, W);
             }
             get
             {
@@ -590,29 +629,6 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        /// <summary>
-        /// Dispose.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        public void Dispose()
-        {
-            //Throw excpetion if Dispose() is called in separate thread.
-            if (!Window.IsInstalled())
-            {
-                throw new System.InvalidOperationException("This API called from separate thread. This API must be called from MainThread.");
-            }
-
-            if (isDisposeQueued)
-            {
-                Dispose(DisposeTypes.Implicit);
-            }
-            else
-            {
-                Dispose(DisposeTypes.Explicit);
-                System.GC.SuppressFinalize(this);
-            }
-        }
-
         internal static global::System.Runtime.InteropServices.HandleRef getCPtr(Vector4 obj)
         {
             return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
@@ -661,39 +677,11 @@ namespace Tizen.NUI
             return ret;
         }
 
-        /// <summary>
-        /// Dispose.
-        /// </summary>
-        /// <param name="type">The dispose type</param>
-        /// <since_tizen> 3 </since_tizen>
-        protected virtual void Dispose(DisposeTypes type)
+        /// This will not be public opened.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (type == DisposeTypes.Explicit)
-            {
-                //Called by User
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //because the execution order of Finalizes is non-deterministic.
-
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                if (swigCMemOwn)
-                {
-                    swigCMemOwn = false;
-                    Interop.Vector4.delete_Vector4(swigCPtr);
-                }
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-            disposed = true;
+            Interop.Vector4.delete_Vector4(swigCPtr);
         }
 
         private Vector4 Add(Vector4 rhs)

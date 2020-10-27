@@ -2,7 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <NoWarn>$(NoWarn);CS0618;CS0809;CS1591</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <TizenPreloadFile Include="Tizen.NUI.preload" Sequence="30" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
@@ -13,6 +18,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tizen.Applications.Common\Tizen.Applications.Common.csproj" />
+    <ProjectReference Include="..\Tizen.Applications.ComponentBased\Tizen.Applications.ComponentBased.csproj" />
+    <ProjectReference Include="..\Tizen.System.Information\Tizen.System.Information.csproj" />
     <ProjectReference Include="..\Tizen.System.SystemSettings\Tizen.System.SystemSettings.csproj" />
   </ItemGroup>
 
@@ -20,6 +27,9 @@
     <ItemGroup>
       <ReferencePath Condition="'%(FileName)' == 'Tizen.System.SystemSettings'">
         <Aliases>TizenSystemSettings</Aliases>
+      </ReferencePath>
+      <ReferencePath Condition="'%(FileName)' == 'Tizen.System.Information'">
+        <Aliases>TizenSystemInformation</Aliases>
       </ReferencePath>
     </ItemGroup>
   </Target>

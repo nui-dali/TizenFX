@@ -25,12 +25,14 @@ namespace Tizen.Account.OAuth2
     /// The CodeGrantAuthorizer is used to obtain access tokens and refresh tokens using Authorization Code Grant flow as described at https://tools.ietf.org/html/rfc6749#section-4.1
     /// </summary>
     /// <since_tizen> 3 </since_tizen>
+    [Obsolete]
     public class CodeGrantAuthorizer : Authorizer
     {
         /// <summary>
         /// The constructor
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
+        [Obsolete]
         public CodeGrantAuthorizer()
         {
 
@@ -39,7 +41,7 @@ namespace Tizen.Account.OAuth2
 
 
         /// <summary>
-        /// Retrieves access token by exchanging authorization code received using <see cref="AuthorizeAsync(AuthorizationRequest)"/>.
+        /// Retrieves access token by exchanging authorization code received using <see cref="ClientCredentialsAuthorizer.AuthorizeAsync(AuthorizationRequest)"/>.
         /// The authroization request parameters should be as defined in https://tools.ietf.org/html/rfc6749#section-4.1.3
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
@@ -48,6 +50,7 @@ namespace Tizen.Account.OAuth2
         /// <privilege>http://tizen.org/privilege/internet</privilege>
         /// <exception cref="ArgumentException">Thrown when method failed due to invalid argumets</exception>
         /// <exception cref="OAuth2Exception">Thrown when method fails due to server error</exception>
+        [Obsolete]
         public  async Task<TokenResponse> GetAccessTokenAsync(TokenRequest request)
         {
             IntPtr requestHandle = GetRequestHandle(request as CodeGrantTokenRequest);

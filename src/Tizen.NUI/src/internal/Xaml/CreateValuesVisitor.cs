@@ -47,6 +47,8 @@ namespace Tizen.NUI.Xaml
             XamlParseException xpe;
             var type = XamlParser.GetElementType(node.XmlType, node, Context.RootElement?.GetType().GetTypeInfo().Assembly,
                 out xpe);
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
             if (xpe != null)
                 throw xpe;
 
@@ -88,7 +90,16 @@ namespace Tizen.NUI.Xaml
                     }
                     if (value == null)
                     {
-                        value = Activator.CreateInstance(type);
+                        if (type.GetTypeInfo().DeclaredConstructors.Any(ci => ci.IsPublic && ci.GetParameters().Length == 0))
+                        {
+                            //default constructor
+                            value = Activator.CreateInstance(type);
+                        }
+                        else
+                        {
+                            //constructor with all default parameters
+                            value = Activator.CreateInstance(type, BindingFlags.CreateInstance | BindingFlags.Public | BindingFlags.Instance | BindingFlags.OptionalParamBinding, null, new object[] { Type.Missing }, CultureInfo.CurrentCulture);
+                        }
                         if (value is Element)
                         {
                             if (null != Application.Current)
@@ -216,7 +227,7 @@ namespace Tizen.NUI.Xaml
             if (!node.Properties.ContainsKey(XmlName.xFactoryMethod))
             {
                 //non-default ctor
-                object ret = Activator.CreateInstance(nodeType, arguments);
+                object ret = Activator.CreateInstance(nodeType, BindingFlags.CreateInstance | BindingFlags.Public | BindingFlags.Instance | BindingFlags.OptionalParamBinding, null, arguments, CultureInfo.CurrentCulture);
                 if (ret is Element)
                 {
                     if (null != Application.Current)
@@ -270,6 +281,12 @@ namespace Tizen.NUI.Xaml
             {
                 var array = new object[1];
                 array[0] = Values[elementNode];
+
+                if (array[0].GetType().IsClass)
+                {
+                    elementNode.Accept(new ApplyPropertiesVisitor(Context, true), null);
+                }
+
                 return array;
             }
 

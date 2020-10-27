@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright(c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  * limitations under the License.
  *
  */
+using System.ComponentModel;
 
 namespace Tizen.NUI
 {
@@ -25,21 +26,19 @@ namespace Tizen.NUI
     /// <since_tizen> 3 </since_tizen>
     public class LongPressGesture : Gesture
     {
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
         /// <summary>
         /// The constructor.
         /// </summary>
         /// <param name="state">The state of the gesture</param>
         /// <since_tizen> 3 </since_tizen>
-        public LongPressGesture(Gesture.StateType state) : this(Interop.LongPressGesture.new_LongPressGesture__SWIG_0((int)state), true)
+        public LongPressGesture(Gesture.StateType state) : this(Interop.LongPressGesture.LongPressGesture_New((int)state), true)
         {
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
         internal LongPressGesture(global::System.IntPtr cPtr, bool cMemoryOwn) : base(Interop.LongPressGesture.LongPressGesture_SWIGUpcast(cPtr), cMemoryOwn)
         {
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
         }
 
         /// <summary>
@@ -136,44 +135,20 @@ namespace Tizen.NUI
 
         internal static LongPressGesture GetLongPressGestureFromPtr(global::System.IntPtr cPtr)
         {
-            LongPressGesture ret = new LongPressGesture(cPtr, false);
+            LongPressGesture ret = Registry.GetManagedBaseHandleFromNativePtr(cPtr) as LongPressGesture;
+            if (ret == null)
+            {
+                ret = new LongPressGesture(cPtr, false);
+            }
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
             return ret;
         }
 
-        /// <summary>
-        /// Dispose.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        protected override void Dispose(DisposeTypes type)
+        /// This will not be public opened.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            if(disposed)
-            {
-                return;
-            }
-
-            if(type == DisposeTypes.Explicit)
-            {
-                //Called by User
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //because the execution order of Finalizes is non-deterministic.
-
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                if (swigCMemOwn)
-                {
-                    swigCMemOwn = false;
-                    Interop.LongPressGesture.delete_LongPressGesture(swigCPtr);
-                }
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-
-            base.Dispose(type);
+            Interop.LongPressGesture.delete_LongPressGesture(swigCPtr);
         }
     }
 }

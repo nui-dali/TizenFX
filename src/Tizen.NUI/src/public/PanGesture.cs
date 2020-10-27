@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright(c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,10 @@
  * limitations under the License.
  *
  */
+using System.ComponentModel;
 
 namespace Tizen.NUI
 {
-
     /// <summary>
     /// A PanGesture is emitted when the user moves one or more fingers in a particular direction.<br />
     /// A pan gesture will end in the following ways:<br />
@@ -30,13 +30,12 @@ namespace Tizen.NUI
     /// <since_tizen> 3 </since_tizen>
     public class PanGesture : Gesture
     {
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
         /// <summary>
         /// The default constructor.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
-        public PanGesture() : this(Interop.PanGestureDetector.new_PanGesture__SWIG_0(), true)
+        public PanGesture() : this(Interop.PanGestureDetector.PanGesture_New(0), true)
         {
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
@@ -45,14 +44,13 @@ namespace Tizen.NUI
         /// The constructor.
         /// </summary>
         /// <param name="state">The state of the gesture</param>
-        internal PanGesture(Gesture.StateType state) : this(Interop.PanGestureDetector.new_PanGesture__SWIG_1((int)state), true)
+        internal PanGesture(Gesture.StateType state) : this(Interop.PanGestureDetector.PanGesture_New((int)state), true)
         {
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
         internal PanGesture(global::System.IntPtr cPtr, bool cMemoryOwn) : base(Interop.PanGestureDetector.PanGesture_SWIGUpcast(cPtr), cMemoryOwn)
         {
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
         }
 
         /// <summary>
@@ -328,46 +326,20 @@ namespace Tizen.NUI
 
         internal static PanGesture GetPanGestureFromPtr(global::System.IntPtr cPtr)
         {
-            PanGesture ret = new PanGesture(cPtr, false);
+            PanGesture ret = Registry.GetManagedBaseHandleFromNativePtr(cPtr) as PanGesture;
+            if (ret == null)
+            {
+                ret = new PanGesture(cPtr, false);
+            }
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
             return ret;
         }
 
-        /// <summary>
-        /// Dispose.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        protected override void Dispose(DisposeTypes type)
+        /// This will not be public opened.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (type == DisposeTypes.Explicit)
-            {
-                //Called by User
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //because the execution order of Finalizes is non-deterministic.
-
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                if (swigCMemOwn)
-                {
-                    swigCMemOwn = false;
-                    Interop.PanGestureDetector.delete_PanGesture(swigCPtr);
-                }
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-
-            base.Dispose(type);
+            Interop.PanGestureDetector.delete_PanGesture(swigCPtr);
         }
-
     }
-
 }

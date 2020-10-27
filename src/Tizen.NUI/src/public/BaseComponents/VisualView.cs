@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Samsung Electronics Co., Ltd.
+// Copyright (c) 2019 Samsung Electronics Co., Ltd.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 
 namespace Tizen.NUI.BaseComponents
 {
@@ -50,7 +51,29 @@ namespace Tizen.NUI.BaseComponents
         /// Constructor.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
-        public VisualView() : base(typeof(VisualView).FullName, CustomViewBehaviour.ViewBehaviourDefault | CustomViewBehaviour.RequiresTouchEventsSupport)
+        public VisualView() : this(CustomViewBehaviour.ViewBehaviourDefault | CustomViewBehaviour.RequiresTouchEventsSupport)
+        {
+        }
+
+        /// This will be public opened in tizen_6.0 after ACR done. Before ACR, need to be hidden as inhouse API.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public VisualView(ViewStyle viewStyle) : this(CustomViewBehaviour.ViewBehaviourDefault | CustomViewBehaviour.RequiresTouchEventsSupport, viewStyle)
+        {
+
+        }
+
+        /// <summary>Create a VisualView with specified behaviour.</summary>
+        /// <param name="behaviour">CustomView behaviour</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public VisualView(CustomViewBehaviour behaviour) : base(typeof(VisualView).FullName, behaviour)
+        {
+        }
+
+        /// <summary>Create a VisualView with specified behaviour and a style.</summary>
+        /// <param name="behaviour">CustomView behaviour</param>
+        /// <param name="viewStyle">The ViewStyle.</param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public VisualView(CustomViewBehaviour behaviour, ViewStyle viewStyle) : base(typeof(VisualView).FullName, behaviour, viewStyle)
         {
         }
 
@@ -207,83 +230,7 @@ namespace Tizen.NUI.BaseComponents
         /// <since_tizen> 3 </since_tizen>
         public Animation AnimateVisual(VisualMap target, string property, object destinationValue, int startTime, int endTime, AlphaFunction.BuiltinFunctions? alphaFunction = null, object initialValue = null)
         {
-            string _alphaFunction = null;
-            if (alphaFunction != null)
-            {
-                switch (alphaFunction)
-                {
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.Linear:
-                    {
-                        _alphaFunction = "LINEAR";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.Reverse:
-                    {
-                        _alphaFunction = "REVERSE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseInSquare:
-                    {
-                        _alphaFunction = "EASE_IN_SQUARE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseOutSquare:
-                    {
-                        _alphaFunction = "EASE_OUT_SQUARE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseIn:
-                    {
-                        _alphaFunction = "EASE_IN";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseOut:
-                    {
-                        _alphaFunction = "EASE_OUT";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseInOut:
-                    {
-                        _alphaFunction = "EASE_IN_OUT";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseInSine:
-                    {
-                        _alphaFunction = "EASE_IN_SINE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseOutSine:
-                    {
-                        _alphaFunction = "EASE_OUT_SINE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseInOutSine:
-                    {
-                        _alphaFunction = "EASE_IN_OUT_SINE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.Bounce:
-                    {
-                        _alphaFunction = "BOUNCE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.Sin:
-                    {
-                        _alphaFunction = "SIN";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseOutBack:
-                    {
-                        _alphaFunction = "EASE_OUT_BACK";
-                        break;
-                    }
-                    default:
-                    {
-                        _alphaFunction = "DEFAULT";
-                        break;
-                    }
-                }
-            }
+            string _alphaFunction = alphaFunction?.GetDescription();
 
             foreach (var item in _visualDictionary.ToList())
             {
@@ -335,83 +282,7 @@ namespace Tizen.NUI.BaseComponents
         /// <since_tizen> 3 </since_tizen>
         public void AnimateVisualAdd(VisualMap target, string property, object destinationValue, int startTime, int endTime, AlphaFunction.BuiltinFunctions? alphaFunction = null, object initialValue = null)
         {
-            string _alphaFunction = null;
-            if (alphaFunction != null)
-            {
-                switch (alphaFunction)
-                {
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.Linear:
-                    {
-                        _alphaFunction = "LINEAR";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.Reverse:
-                    {
-                        _alphaFunction = "REVERSE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseInSquare:
-                    {
-                        _alphaFunction = "EASE_IN_SQUARE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseOutSquare:
-                    {
-                        _alphaFunction = "EASE_OUT_SQUARE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseIn:
-                    {
-                        _alphaFunction = "EASE_IN";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseOut:
-                    {
-                        _alphaFunction = "EASE_OUT";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseInOut:
-                    {
-                        _alphaFunction = "EASE_IN_OUT";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseInSine:
-                    {
-                        _alphaFunction = "EASE_IN_SINE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseOutSine:
-                    {
-                        _alphaFunction = "EASE_OUT_SINE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseInOutSine:
-                    {
-                        _alphaFunction = "EASE_IN_OUT_SINE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.Bounce:
-                    {
-                        _alphaFunction = "BOUNCE";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.Sin:
-                    {
-                        _alphaFunction = "SIN";
-                        break;
-                    }
-                    case Tizen.NUI.AlphaFunction.BuiltinFunctions.EaseOutBack:
-                    {
-                        _alphaFunction = "EASE_OUT_BACK";
-                        break;
-                    }
-                    default:
-                    {
-                        _alphaFunction = "DEFAULT";
-                        break;
-                    }
-                }
-            }
+            string _alphaFunction = alphaFunction?.GetDescription();
 
             foreach (var item in _visualDictionary.ToList())
             {
@@ -504,5 +375,6 @@ namespace Tizen.NUI.BaseComponents
         {
             return new VisualView();
         }
+
     }
 }

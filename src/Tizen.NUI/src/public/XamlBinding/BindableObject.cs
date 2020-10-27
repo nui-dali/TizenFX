@@ -50,6 +50,41 @@ namespace Tizen.NUI.Binding
         [EditorBrowsable(EditorBrowsableState.Never)]
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// This will be public opened in tizen_6.0 after ACR done. Before ACR, need to be hidden as inhouse API.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual void CopyFrom(BindableObject that)
+        {
+            if (null != that)
+            {
+                Dictionary<string, BindableProperty> nameToBindableProperty1;
+                Type type1 = this.GetType();
+                BindableProperty.GetBindablePropertysOfType(type1, out nameToBindableProperty1);
+
+                Dictionary<string, BindableProperty> nameToBindableProperty2;
+                Type type2 = that.GetType();
+                BindableProperty.GetBindablePropertysOfType(type2, out nameToBindableProperty2);
+
+                if (null != nameToBindableProperty1)
+                {
+                    foreach (KeyValuePair<string, BindableProperty> keyValuePair in nameToBindableProperty1)
+                    {
+                        BindableProperty bindableProperty;
+                        nameToBindableProperty2.TryGetValue(keyValuePair.Key, out bindableProperty);
+
+                        if (null != bindableProperty)
+                        {
+                            object value = that.GetValue(bindableProperty);
+
+                            if (null != value)
+                            {
+                                SetValue(keyValuePair.Value, value);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Raised whenever the BindingContext property changes.
         /// </summary>
@@ -146,13 +181,17 @@ namespace Tizen.NUI.Binding
         /// </summary>
         /// <param name="targetProperty">The BindableProperty on which to set a binding.</param>
         /// <param name="binding">The binding to set.</param>
-        internal void SetBinding(BindableProperty targetProperty, BindingBase binding)
+        /// This will be public opened in tizen_5.0 after ACR done. Before ACR, need to be hidden as inhouse API.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void SetBinding(BindableProperty targetProperty, BindingBase binding)
         {
             SetBinding(targetProperty, binding, false);
         }
 
         private bool isCreateByXaml = false;
-        internal virtual bool IsCreateByXaml
+        /// Only used by the IL of xaml, will never changed to not hidden.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual bool IsCreateByXaml
         {
             get
             {
@@ -180,6 +219,8 @@ namespace Tizen.NUI.Binding
             else
             {
                 property.PropertyChanged?.Invoke(this, null, value);
+
+                OnPropertyChanged(property.PropertyName);
             }
         }
 

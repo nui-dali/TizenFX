@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright(c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,14 +22,11 @@ using Tizen.NUI.BaseComponents;
 
 namespace Tizen.NUI
 {
-
     internal class ViewImpl : CustomActorImpl
     {
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
         internal ViewImpl(global::System.IntPtr cPtr, bool cMemoryOwn) : base(Interop.ViewImpl.ViewImpl_SWIGUpcast(cPtr), cMemoryOwn)
         {
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
         }
 
         internal static global::System.Runtime.InteropServices.HandleRef getCPtr(ViewImpl obj)
@@ -37,38 +34,10 @@ namespace Tizen.NUI
             return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
         }
 
-        protected override void Dispose(DisposeTypes type)
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (type == DisposeTypes.Explicit)
-            {
-                //Called by User
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //because the execution order of Finalizes is non-deterministic.
-
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                if (swigCMemOwn)
-                {
-                    swigCMemOwn = false;
-                    throw new global::System.MethodAccessException("C++ destructor does not have public access");
-                }
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-
-            base.Dispose(type);
+            throw new global::System.MethodAccessException("C++ destructor does not have public access");
         }
-
 
         public static View New()
         {
@@ -102,13 +71,6 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
             return ret;
         }
-
-        internal void SetBackgroundImage(Image image)
-        {
-            Interop.ViewImpl.ViewImpl_SetBackgroundImage(swigCPtr, Image.getCPtr(image));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-        }
-
         public void SetBackground(PropertyMap map)
         {
             Interop.ViewImpl.ViewImpl_SetBackground(swigCPtr, PropertyMap.getCPtr(map));
@@ -267,15 +229,15 @@ namespace Tizen.NUI
             return ret;
         }
 
-        protected virtual new void OnStageConnection(int depth)
+        protected virtual new void OnSceneConnection(int depth)
         {
-            if (SwigDerivedClassHasMethod("OnStageConnection", swigMethodTypes0)) Interop.ViewImplSignal.ViewImpl_OnStageConnectionSwigExplicitViewImpl(swigCPtr, depth); else Interop.ViewImplSignal.ViewImpl_OnStageConnection(swigCPtr, depth);
+            if (SwigDerivedClassHasMethod("OnSceneConnection", swigMethodTypes0)) Interop.ViewImplSignal.ViewImpl_OnSceneConnectionSwigExplicitViewImpl(swigCPtr, depth); else Interop.ViewImplSignal.ViewImpl_OnSceneConnection(swigCPtr, depth);
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        protected virtual new void OnStageDisconnection()
+        protected virtual new void OnSceneDisconnection()
         {
-            if (SwigDerivedClassHasMethod("OnStageDisconnection", swigMethodTypes1)) Interop.ViewImplSignal.ViewImpl_OnStageDisconnectionSwigExplicitViewImpl(swigCPtr); else Interop.ViewImplSignal.ViewImpl_OnStageDisconnection(swigCPtr);
+            if (SwigDerivedClassHasMethod("OnSceneDisconnection", swigMethodTypes1)) Interop.ViewImplSignal.ViewImpl_OnSceneDisconnectionSwigExplicitViewImpl(swigCPtr); else Interop.ViewImplSignal.ViewImpl_OnSceneDisconnection(swigCPtr);
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
@@ -309,30 +271,9 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        internal virtual new bool OnTouchEvent(SWIGTYPE_p_Dali__TouchEvent arg0)
-        {
-            bool ret = (SwigDerivedClassHasMethod("OnTouchEvent", swigMethodTypes7) ? Interop.ViewImplSignal.ViewImpl_OnTouchEventSwigExplicitViewImpl(swigCPtr, SWIGTYPE_p_Dali__TouchEvent.getCPtr(arg0)) : Interop.ViewImplSignal.ViewImpl_OnTouchEvent(swigCPtr, SWIGTYPE_p_Dali__TouchEvent.getCPtr(arg0)));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            return ret;
-        }
-
-        protected virtual new bool OnHoverEvent(Hover arg0)
-        {
-            bool ret = (SwigDerivedClassHasMethod("OnHoverEvent", swigMethodTypes8) ? Interop.ViewImplSignal.ViewImpl_OnHoverEventSwigExplicitViewImpl(swigCPtr, Hover.getCPtr(arg0)) : Interop.ViewImplSignal.ViewImpl_OnHoverEvent(swigCPtr, Hover.getCPtr(arg0)));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            return ret;
-        }
-
         protected virtual new bool OnKeyEvent(Key arg0)
         {
             bool ret = (SwigDerivedClassHasMethod("OnKeyEvent", swigMethodTypes9) ? Interop.ViewImplSignal.ViewImpl_OnKeyEventSwigExplicitViewImpl(swigCPtr, Key.getCPtr(arg0)) : Interop.ViewImplSignal.ViewImpl_OnKeyEvent(swigCPtr, Key.getCPtr(arg0)));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            return ret;
-        }
-
-        protected virtual new bool OnWheelEvent(Wheel arg0)
-        {
-            bool ret = (SwigDerivedClassHasMethod("OnWheelEvent", swigMethodTypes10) ? Interop.ViewImplSignal.ViewImpl_OnWheelEventSwigExplicitViewImpl(swigCPtr, Wheel.getCPtr(arg0)) : Interop.ViewImplSignal.ViewImpl_OnWheelEvent(swigCPtr, Wheel.getCPtr(arg0)));
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
             return ret;
         }
@@ -409,18 +350,6 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        public virtual void OnControlChildAdd(View child)
-        {
-            if (SwigDerivedClassHasMethod("OnControlChildAdd", swigMethodTypes22)) Interop.ViewImplSignal.ViewImpl_OnControlChildAddSwigExplicitViewImpl(swigCPtr, View.getCPtr(child)); else Interop.ViewImplSignal.ViewImpl_OnControlChildAdd(swigCPtr, View.getCPtr(child));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-        }
-
-        public virtual void OnControlChildRemove(View child)
-        {
-            if (SwigDerivedClassHasMethod("OnControlChildRemove", swigMethodTypes23)) Interop.ViewImplSignal.ViewImpl_OnControlChildRemoveSwigExplicitViewImpl(swigCPtr, View.getCPtr(child)); else Interop.ViewImplSignal.ViewImpl_OnControlChildRemove(swigCPtr, View.getCPtr(child));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-        }
-
         public virtual void OnStyleChange(StyleManager styleManager, StyleChangeType change)
         {
             if (SwigDerivedClassHasMethod("OnStyleChange", swigMethodTypes24)) Interop.ViewImplSignal.ViewImpl_OnStyleChangeSwigExplicitViewImpl(swigCPtr, StyleManager.getCPtr(styleManager), (int)change); else Interop.ViewImplSignal.ViewImpl_OnStyleChange(swigCPtr, StyleManager.getCPtr(styleManager), (int)change);
@@ -437,13 +366,6 @@ namespace Tizen.NUI
         public virtual bool OnAccessibilityPan(PanGesture gesture)
         {
             bool ret = (SwigDerivedClassHasMethod("OnAccessibilityPan", swigMethodTypes26) ? Interop.ViewImplSignal.ViewImpl_OnAccessibilityPanSwigExplicitViewImpl(swigCPtr, PanGesture.getCPtr(gesture)) : Interop.ViewImplSignal.ViewImpl_OnAccessibilityPan(swigCPtr, PanGesture.getCPtr(gesture)));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            return ret;
-        }
-
-        internal virtual bool OnAccessibilityTouch(SWIGTYPE_p_Dali__TouchEvent touchEvent)
-        {
-            bool ret = (SwigDerivedClassHasMethod("OnAccessibilityTouch", swigMethodTypes27) ? Interop.ViewImplSignal.ViewImpl_OnAccessibilityTouchSwigExplicitViewImpl(swigCPtr, SWIGTYPE_p_Dali__TouchEvent.getCPtr(touchEvent)) : Interop.ViewImplSignal.ViewImpl_OnAccessibilityTouch(swigCPtr, SWIGTYPE_p_Dali__TouchEvent.getCPtr(touchEvent)));
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
             return ret;
         }
@@ -532,10 +454,10 @@ namespace Tizen.NUI
 
         private void SwigDirectorConnect()
         {
-            if (SwigDerivedClassHasMethod("OnStageConnection", swigMethodTypes0))
-                swigDelegate0 = new SwigDelegateViewImpl_0(SwigDirectorOnStageConnection);
-            if (SwigDerivedClassHasMethod("OnStageDisconnection", swigMethodTypes1))
-                swigDelegate1 = new SwigDelegateViewImpl_1(SwigDirectorOnStageDisconnection);
+            if (SwigDerivedClassHasMethod("OnSceneConnection", swigMethodTypes0))
+                swigDelegate0 = new SwigDelegateViewImpl_0(SwigDirectorOnSceneConnection);
+            if (SwigDerivedClassHasMethod("OnSceneDisconnection", swigMethodTypes1))
+                swigDelegate1 = new SwigDelegateViewImpl_1(SwigDirectorOnSceneDisconnection);
             if (SwigDerivedClassHasMethod("OnChildAdd", swigMethodTypes2))
                 swigDelegate2 = new SwigDelegateViewImpl_2(SwigDirectorOnChildAdd);
             if (SwigDerivedClassHasMethod("OnChildRemove", swigMethodTypes3))
@@ -546,14 +468,8 @@ namespace Tizen.NUI
                 swigDelegate5 = new SwigDelegateViewImpl_5(SwigDirectorOnSizeSet);
             if (SwigDerivedClassHasMethod("OnSizeAnimation", swigMethodTypes6))
                 swigDelegate6 = new SwigDelegateViewImpl_6(SwigDirectorOnSizeAnimation);
-            if (SwigDerivedClassHasMethod("OnTouchEvent", swigMethodTypes7))
-                swigDelegate7 = new SwigDelegateViewImpl_7(SwigDirectorOnTouchEvent);
-            if (SwigDerivedClassHasMethod("OnHoverEvent", swigMethodTypes8))
-                swigDelegate8 = new SwigDelegateViewImpl_8(SwigDirectorOnHoverEvent);
             if (SwigDerivedClassHasMethod("OnKeyEvent", swigMethodTypes9))
                 swigDelegate9 = new SwigDelegateViewImpl_9(SwigDirectorOnKeyEvent);
-            if (SwigDerivedClassHasMethod("OnWheelEvent", swigMethodTypes10))
-                swigDelegate10 = new SwigDelegateViewImpl_10(SwigDirectorOnWheelEvent);
             if (SwigDerivedClassHasMethod("OnRelayout", swigMethodTypes11))
                 swigDelegate11 = new SwigDelegateViewImpl_11(SwigDirectorOnRelayout);
             if (SwigDerivedClassHasMethod("OnSetResizePolicy", swigMethodTypes12))
@@ -576,18 +492,12 @@ namespace Tizen.NUI
                 swigDelegate20 = new SwigDelegateViewImpl_20(SwigDirectorOnLayoutNegotiated);
             if (SwigDerivedClassHasMethod("OnInitialize", swigMethodTypes21))
                 swigDelegate21 = new SwigDelegateViewImpl_21(SwigDirectorOnInitialize);
-            if (SwigDerivedClassHasMethod("OnControlChildAdd", swigMethodTypes22))
-                swigDelegate22 = new SwigDelegateViewImpl_22(SwigDirectorOnControlChildAdd);
-            if (SwigDerivedClassHasMethod("OnControlChildRemove", swigMethodTypes23))
-                swigDelegate23 = new SwigDelegateViewImpl_23(SwigDirectorOnControlChildRemove);
             if (SwigDerivedClassHasMethod("OnStyleChange", swigMethodTypes24))
                 swigDelegate24 = new SwigDelegateViewImpl_24(SwigDirectorOnStyleChange);
             if (SwigDerivedClassHasMethod("OnAccessibilityActivated", swigMethodTypes25))
                 swigDelegate25 = new SwigDelegateViewImpl_25(SwigDirectorOnAccessibilityActivated);
             if (SwigDerivedClassHasMethod("OnAccessibilityPan", swigMethodTypes26))
                 swigDelegate26 = new SwigDelegateViewImpl_26(SwigDirectorOnAccessibilityPan);
-            if (SwigDerivedClassHasMethod("OnAccessibilityTouch", swigMethodTypes27))
-                swigDelegate27 = new SwigDelegateViewImpl_27(SwigDirectorOnAccessibilityTouch);
             if (SwigDerivedClassHasMethod("OnAccessibilityValueChange", swigMethodTypes28))
                 swigDelegate28 = new SwigDelegateViewImpl_28(SwigDirectorOnAccessibilityValueChange);
             if (SwigDerivedClassHasMethod("OnAccessibilityZoom", swigMethodTypes29))
@@ -614,7 +524,7 @@ namespace Tizen.NUI
                 swigDelegate39 = new SwigDelegateViewImpl_39(SwigDirectorSignalConnected);
             if (SwigDerivedClassHasMethod("SignalDisconnected", swigMethodTypes40))
                 swigDelegate40 = new SwigDelegateViewImpl_40(SwigDirectorSignalDisconnected);
-            Interop.ViewImpl.ViewImpl_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate7, swigDelegate8, swigDelegate9, swigDelegate10, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16, swigDelegate17, swigDelegate18, swigDelegate19, swigDelegate20, swigDelegate21, swigDelegate22, swigDelegate23, swigDelegate24, swigDelegate25, swigDelegate26, swigDelegate27, swigDelegate28, swigDelegate29, swigDelegate30, swigDelegate31, swigDelegate32, swigDelegate33, swigDelegate34, swigDelegate35, swigDelegate36, swigDelegate37, swigDelegate38, swigDelegate39, swigDelegate40);
+            Interop.ViewImpl.ViewImpl_director_connect(swigCPtr, swigDelegate0, swigDelegate1, swigDelegate2, swigDelegate3, swigDelegate4, swigDelegate5, swigDelegate6, swigDelegate9, swigDelegate11, swigDelegate12, swigDelegate13, swigDelegate14, swigDelegate15, swigDelegate16, swigDelegate17, swigDelegate18, swigDelegate19, swigDelegate20, swigDelegate21, swigDelegate24, swigDelegate25, swigDelegate26, swigDelegate28, swigDelegate29, swigDelegate30, swigDelegate31, swigDelegate32, swigDelegate33, swigDelegate34, swigDelegate35, swigDelegate36, swigDelegate37, swigDelegate38, swigDelegate39, swigDelegate40);
         }
 
 
@@ -628,14 +538,14 @@ namespace Tizen.NUI
             return hasDerivedMethod && (methodInfo != null);
         }
 
-        private void SwigDirectorOnStageConnection(int depth)
+        private void SwigDirectorOnSceneConnection(int depth)
         {
-            OnStageConnection(depth);
+            OnSceneConnection(depth);
         }
 
-        private void SwigDirectorOnStageDisconnection()
+        private void SwigDirectorOnSceneDisconnection()
         {
-            OnStageDisconnection();
+            OnSceneDisconnection();
         }
 
         private void SwigDirectorOnChildAdd(global::System.IntPtr child)
@@ -673,24 +583,9 @@ namespace Tizen.NUI
             OnSizeAnimation(new Animation(animation, false), new Vector3(targetSize, false));
         }
 
-        private bool SwigDirectorOnTouchEvent(global::System.IntPtr arg0)
-        {
-            return OnTouchEvent(new SWIGTYPE_p_Dali__TouchEvent(arg0, false));
-        }
-
-        private bool SwigDirectorOnHoverEvent(global::System.IntPtr arg0)
-        {
-            return OnHoverEvent(new Hover(arg0, false));
-        }
-
         private bool SwigDirectorOnKeyEvent(global::System.IntPtr arg0)
         {
             return OnKeyEvent(new Key(arg0, false));
-        }
-
-        private bool SwigDirectorOnWheelEvent(global::System.IntPtr arg0)
-        {
-            return OnWheelEvent(new Wheel(arg0, false));
         }
 
         private void SwigDirectorOnRelayout(global::System.IntPtr size, global::System.IntPtr container)
@@ -753,24 +648,6 @@ namespace Tizen.NUI
             OnInitialize();
         }
 
-        private void SwigDirectorOnControlChildAdd(global::System.IntPtr child)
-        {
-            View view = Registry.GetManagedBaseHandleFromNativePtr(child) as View;
-            if (view)
-            {
-                OnControlChildAdd(view);
-            }
-        }
-
-        private void SwigDirectorOnControlChildRemove(global::System.IntPtr child)
-        {
-            View view = Registry.GetManagedBaseHandleFromNativePtr(child) as View;
-            if (view)
-            {
-                OnControlChildRemove(view);
-            }
-        }
-
         private void SwigDirectorOnStyleChange(global::System.IntPtr styleManager, int change)
         {
             StyleManager stManager = Registry.GetManagedBaseHandleFromNativePtr(styleManager) as StyleManager;
@@ -788,11 +665,6 @@ namespace Tizen.NUI
         private bool SwigDirectorOnAccessibilityPan(global::System.IntPtr gesture)
         {
             return OnAccessibilityPan(new PanGesture(gesture, true));
-        }
-
-        private bool SwigDirectorOnAccessibilityTouch(global::System.IntPtr touchEvent)
-        {
-            return OnAccessibilityTouch(new SWIGTYPE_p_Dali__TouchEvent(touchEvent, false));
         }
 
         private bool SwigDirectorOnAccessibilityValueChange(bool isIncrease)
@@ -875,13 +747,7 @@ namespace Tizen.NUI
         /// <since_tizen> 3 </since_tizen>
         public delegate void SwigDelegateViewImpl_6(global::System.IntPtr animation, global::System.IntPtr targetSize);
         /// <since_tizen> 3 </since_tizen>
-        public delegate bool SwigDelegateViewImpl_7(global::System.IntPtr arg0);
-        /// <since_tizen> 3 </since_tizen>
-        public delegate bool SwigDelegateViewImpl_8(global::System.IntPtr arg0);
-        /// <since_tizen> 3 </since_tizen>
         public delegate bool SwigDelegateViewImpl_9(global::System.IntPtr arg0);
-        /// <since_tizen> 3 </since_tizen>
-        public delegate bool SwigDelegateViewImpl_10(global::System.IntPtr arg0);
         /// <since_tizen> 3 </since_tizen>
         public delegate void SwigDelegateViewImpl_11(global::System.IntPtr size, global::System.IntPtr container);
         /// <since_tizen> 3 </since_tizen>
@@ -914,8 +780,6 @@ namespace Tizen.NUI
         public delegate bool SwigDelegateViewImpl_25();
         /// <since_tizen> 3 </since_tizen>
         public delegate bool SwigDelegateViewImpl_26(global::System.IntPtr gesture);
-        /// <since_tizen> 3 </since_tizen>
-        public delegate bool SwigDelegateViewImpl_27(global::System.IntPtr touchEvent);
         /// <since_tizen> 3 </since_tizen>
         public delegate bool SwigDelegateViewImpl_28(bool isIncrease);
         /// <since_tizen> 3 </since_tizen>
@@ -950,10 +814,7 @@ namespace Tizen.NUI
         private SwigDelegateViewImpl_4 swigDelegate4;
         private SwigDelegateViewImpl_5 swigDelegate5;
         private SwigDelegateViewImpl_6 swigDelegate6;
-        private SwigDelegateViewImpl_7 swigDelegate7;
-        private SwigDelegateViewImpl_8 swigDelegate8;
         private SwigDelegateViewImpl_9 swigDelegate9;
-        private SwigDelegateViewImpl_10 swigDelegate10;
         private SwigDelegateViewImpl_11 swigDelegate11;
         private SwigDelegateViewImpl_12 swigDelegate12;
         private SwigDelegateViewImpl_13 swigDelegate13;
@@ -970,7 +831,6 @@ namespace Tizen.NUI
         private SwigDelegateViewImpl_24 swigDelegate24;
         private SwigDelegateViewImpl_25 swigDelegate25;
         private SwigDelegateViewImpl_26 swigDelegate26;
-        private SwigDelegateViewImpl_27 swigDelegate27;
         private SwigDelegateViewImpl_28 swigDelegate28;
         private SwigDelegateViewImpl_29 swigDelegate29;
         private SwigDelegateViewImpl_30 swigDelegate30;
@@ -992,10 +852,7 @@ namespace Tizen.NUI
         private static global::System.Type[] swigMethodTypes4 = new global::System.Type[] { typeof(int), typeof(PropertyValue) };
         private static global::System.Type[] swigMethodTypes5 = new global::System.Type[] { typeof(Vector3) };
         private static global::System.Type[] swigMethodTypes6 = new global::System.Type[] { typeof(Animation), typeof(Vector3) };
-        private static global::System.Type[] swigMethodTypes7 = new global::System.Type[] { typeof(SWIGTYPE_p_Dali__TouchEvent) };
-        private static global::System.Type[] swigMethodTypes8 = new global::System.Type[] { typeof(Hover) };
         private static global::System.Type[] swigMethodTypes9 = new global::System.Type[] { typeof(Key) };
-        private static global::System.Type[] swigMethodTypes10 = new global::System.Type[] { typeof(Wheel) };
         private static global::System.Type[] swigMethodTypes11 = new global::System.Type[] { typeof(Vector2), typeof(RelayoutContainer) };
         private static global::System.Type[] swigMethodTypes12 = new global::System.Type[] { typeof(ResizePolicyType), typeof(DimensionType) };
         private static global::System.Type[] swigMethodTypes13 = new global::System.Type[] { };
@@ -1012,7 +869,6 @@ namespace Tizen.NUI
         private static global::System.Type[] swigMethodTypes24 = new global::System.Type[] { typeof(StyleManager), typeof(StyleChangeType) };
         private static global::System.Type[] swigMethodTypes25 = new global::System.Type[] { };
         private static global::System.Type[] swigMethodTypes26 = new global::System.Type[] { typeof(PanGesture) };
-        private static global::System.Type[] swigMethodTypes27 = new global::System.Type[] { typeof(SWIGTYPE_p_Dali__TouchEvent) };
         private static global::System.Type[] swigMethodTypes28 = new global::System.Type[] { typeof(bool) };
         private static global::System.Type[] swigMethodTypes29 = new global::System.Type[] { };
         private static global::System.Type[] swigMethodTypes30 = new global::System.Type[] { };
@@ -1027,5 +883,4 @@ namespace Tizen.NUI
         private static global::System.Type[] swigMethodTypes39 = new global::System.Type[] { typeof(SlotObserver), typeof(SWIGTYPE_p_Dali__CallbackBase) };
         private static global::System.Type[] swigMethodTypes40 = new global::System.Type[] { typeof(SlotObserver), typeof(SWIGTYPE_p_Dali__CallbackBase) };
     }
-
 }

@@ -129,6 +129,13 @@ namespace Tizen.NUI.Xaml
                     addMethod?.Invoke(source, new[] { value });
                     return;
                 }
+                if (xpe == null && Context.Types[parentElement].GetRuntimeMethods().Any(mi => mi.Name == "Add" && mi.GetParameters().Length == 1))
+                {
+                    //if there are similar parameters in the function, this will exist issue.
+                    var addMethod = Context.Types[parentElement].GetRuntimeMethods().First(mi => mi.Name == "Add" && mi.GetParameters().Length == 1);
+                    if (addMethod != null) addMethod.Invoke(source, new[] { value });
+                    return;
+                }
                 if (xpe == null && (contentProperty = GetContentPropertyName(Context.Types[parentElement].GetTypeInfo())) != null) {
                     var name = new XmlName(node.NamespaceURI, contentProperty);
                     if (Skips.Contains(name))
@@ -139,13 +146,7 @@ namespace Tizen.NUI.Xaml
                     SetPropertyValue(source, name, value, Context.RootElement, node, Context, node);
                     return;
                 }
-                if (xpe == null && Context.Types[parentElement].GetRuntimeMethods().Any(mi => mi.Name == "Add" && mi.GetParameters().Length == 1))
-                {
-                    //if there are similar parameters in the function, this will exist issue.
-                    var addMethod =	Context.Types[parentElement].GetRuntimeMethods().First(mi => mi.Name == "Add" && mi.GetParameters().Length == 1);
-                    if(addMethod != null) addMethod.Invoke(source, new[] { value });
-                    return;
-                }
+                
                 xpe = xpe ?? new XamlParseException($"Can not set the content of {((IElementNode)parentNode).XmlType.Name} as it doesn't have a ContentPropertyAttribute", node);
                 if (Context.ExceptionHandler != null)
                     Context.ExceptionHandler(xpe);
@@ -237,8 +238,8 @@ namespace Tizen.NUI.Xaml
             if (value.GetType().GetTypeInfo().GetCustomAttribute<AcceptEmptyServiceProviderAttribute>() == null)
                 serviceProvider = new XamlServiceProvider(node, Context);
 
-            if (serviceProvider != null && serviceProvider.IProvideValueTarget != null && propertyName != XmlName.Empty) {
-                ((XamlValueTargetProvider)serviceProvider.IProvideValueTarget).TargetProperty = GetTargetProperty(source, propertyName, Context, node);
+            if (serviceProvider != null && serviceProvider.IProvideValueTarget is XamlValueTargetProvider && propertyName != XmlName.Empty) {
+                (serviceProvider.IProvideValueTarget as XamlValueTargetProvider).TargetProperty = GetTargetProperty(source, propertyName, Context, node);
             }
 
             if (markupExtension != null)
@@ -344,12 +345,13 @@ namespace Tizen.NUI.Xaml
             if (xpe == null && TrySetBinding(xamlelement, property, localName, value, lineInfo, out xpe))
                 return;
 
-            //If it's a BindableProberty, SetValue
-            if (xpe == null && TrySetValue(xamlelement, property, attached, value, lineInfo, serviceProvider, out xpe))
-                return;
-
+            //Call TrySetProperty first and then TrySetValue to keep the code logic consistent whether it is through xaml or code.
             //If we can assign that value to a normal property, let's do it
             if (xpe == null && TrySetProperty(xamlelement, localName, value, lineInfo, serviceProvider, context, out xpe))
+                return;
+
+            //If it's a BindableProberty, SetValue
+            if (xpe == null && TrySetValue(xamlelement, property, attached, value, lineInfo, serviceProvider, out xpe))
                 return;
 
             //If it's an already initialized property, add to it
@@ -448,7 +450,6 @@ namespace Tizen.NUI.Xaml
             var elementType = element.GetType();
             var binding = value.ConvertTo(typeof(BindingBase),pinfoRetriever:null,serviceProvider:null) as BindingBase;
             var bindable = element as BindableObject;
-            var nativeBindingService = DependencyService.Get<INativeBindingService>();
 
             if (binding == null)
                 return false;
@@ -457,12 +458,6 @@ namespace Tizen.NUI.Xaml
                 bindable.SetBinding(property, binding);
                 return true;
             }
-
-            if (nativeBindingService != null && property != null && nativeBindingService.TrySetBinding(element, property, binding))
-                return true;
-
-            if (nativeBindingService != null && nativeBindingService.TrySetBinding(element, localName, binding))
-                return true;
 
             if (property != null)
                 exception = new XamlParseException($"{elementType.Name} is not a BindableObject or does not support native bindings", lineInfo);
@@ -476,7 +471,6 @@ namespace Tizen.NUI.Xaml
 
             var elementType = element.GetType();
             var bindable = element as BindableObject;
-            var nativeBindingService = DependencyService.Get<INativeBindingService>();
 
             if (property == null)
                 return false;
@@ -507,9 +501,6 @@ namespace Tizen.NUI.Xaml
                 // This might be a collection; see if we can add to it
                 return TryAddValue(bindable, property, value, serviceProvider);
             }
-
-            if (nativeBindingService != null && nativeBindingService.TrySetValue(element, property, convertedValue))
-                return true;
 
             exception = new XamlParseException($"{elementType.Name} is not a BindableObject or does not support setting native BindableProperties", lineInfo);
             return false;
@@ -549,12 +540,56 @@ namespace Tizen.NUI.Xaml
             if (serviceProvider != null && serviceProvider.IProvideValueTarget != null)
                 ((XamlValueTargetProvider)serviceProvider.IProvideValueTarget).TargetProperty = propertyInfo;
 
-            object convertedValue = value.ConvertTo(propertyInfo.PropertyType, () => propertyInfo, serviceProvider);
-            if (convertedValue != null && !propertyInfo.PropertyType.IsInstanceOfType(convertedValue))
-                return false;
+            object convertedValue = GetConvertedValue(propertyInfo.PropertyType, value, () => propertyInfo, serviceProvider);
 
-            setter.Invoke(element, new object [] { convertedValue });
+            if (null == convertedValue)
+            {
+                var methods = propertyInfo.PropertyType.GetMethods().Where(a => a.Name == "op_Implicit");
+
+                foreach (var method in methods)
+                {
+                    var paramType = method.GetParameters()[0].ParameterType;
+                    convertedValue = GetConvertedValue(paramType, value, () => propertyInfo, serviceProvider);
+
+                    if (null != convertedValue)
+                    {
+                        var realValue = Activator.CreateInstance(propertyInfo.PropertyType);
+                        convertedValue = method.Invoke(realValue, new object[] { convertedValue });
+
+                        if (null != convertedValue)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (null == convertedValue)
+            {
+                return false;
+            }
+
+            setter.Invoke(element, new object[] { convertedValue });
             return true;
+        }
+
+        static private object GetConvertedValue(Type valueType, object value, Func<MemberInfo> minfoRetriever, XamlServiceProvider serviceProvider)
+        {
+            try
+            {
+                object convertedValue = value.ConvertTo(valueType, minfoRetriever, serviceProvider);
+
+                if (convertedValue != null && !valueType.IsInstanceOfType(convertedValue))
+                {
+                    return null;
+                }
+
+                return convertedValue;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         static bool TryGetProperty(object element, string localName, out object value, IXmlLineInfo lineInfo, HydrationContext context, out Exception exception, out object targetProperty)

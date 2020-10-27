@@ -22,7 +22,6 @@ namespace Tizen.NUI
 {
     internal class WidgetImpl : BaseObject
     {
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
         internal WidgetImpl() : this( Interop.WidgetImpl.WidgetImpl_New(), true )
         {
@@ -31,7 +30,6 @@ namespace Tizen.NUI
 
         internal WidgetImpl(global::System.IntPtr cPtr, bool cMemoryOwn) : base(Interop.WidgetImpl.WidgetImpl_SWIGUpcast(cPtr), cMemoryOwn)
         {
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
         }
 
         internal static global::System.Runtime.InteropServices.HandleRef getCPtr(WidgetImpl obj)
@@ -39,35 +37,9 @@ namespace Tizen.NUI
             return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
         }
 
-        protected override void Dispose(DisposeTypes type)
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (type == DisposeTypes.Explicit)
-            {
-                //Called by User
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //because the execution order of Finalizes is non-deterministic.
-
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                if (swigCMemOwn)
-                {
-                    swigCMemOwn = false;
-                    //throw new global::System.MethodAccessException("C++ destructor does not have public access");
-                }
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-
-            base.Dispose(type);
+            //throw new global::System.MethodAccessException("C++ destructor does not have public access");
         }
 
         public class WIdgetInstanceOnCreateArgs : EventArgs
@@ -338,7 +310,12 @@ namespace Tizen.NUI
 
         private void SwigDirectorOnCreate(string contentInfo, global::System.IntPtr window)
         {
-            OnCreate(contentInfo, new Window(window, true));
+            Window ret = Registry.GetManagedBaseHandleFromNativePtr(window) as Window;
+            if (ret == null)
+            {
+                ret = new Window(window, true);
+            }
+            OnCreate(contentInfo, ret);
         }
 
         private void SwigDirectorOnTerminate(string contentInfo, int type)
@@ -358,7 +335,12 @@ namespace Tizen.NUI
 
         private void SwigDirectorOnResize(global::System.IntPtr window)
         {
-            OnResize(new Window(window, true));
+            Window ret = Registry.GetManagedBaseHandleFromNativePtr(window) as Window;
+            if (ret == null)
+            {
+                ret = new Window(window, true);
+            }
+            OnResize(ret);
         }
 
         private void SwigDirectorOnUpdate(string contentInfo, int force)

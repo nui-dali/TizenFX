@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2018 Samsung Electronics Co., Ltd.
+ * Copyright(c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,18 +14,15 @@
  * limitations under the License.
  *
  */
+using Tizen.NUI.BaseComponents;
 
 namespace Tizen.NUI
 {
-    using Tizen.NUI.BaseComponents;
-
     internal class CustomActorImpl : RefObject
     {
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
         internal CustomActorImpl(global::System.IntPtr cPtr, bool cMemoryOwn) : base(Interop.CustomActorImpl.CustomActorImpl_SWIGUpcast(cPtr), cMemoryOwn)
         {
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
         }
 
         internal static global::System.Runtime.InteropServices.HandleRef getCPtr(CustomActorImpl obj)
@@ -33,36 +30,9 @@ namespace Tizen.NUI
             return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
         }
 
-        protected override void Dispose(DisposeTypes type)
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (type == DisposeTypes.Explicit)
-            {
-                //Called by User
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //because the execution order of Finalizes is non-deterministic.
-
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                if (swigCMemOwn)
-                {
-                    swigCMemOwn = false;
-                    throw new global::System.MethodAccessException("C++ destructor does not have public access");
-                }
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-
-            base.Dispose(type);
+            throw new global::System.MethodAccessException("C++ destructor does not have public access");
         }
 
         internal CustomActor Self()
@@ -72,15 +42,15 @@ namespace Tizen.NUI
             return ret;
         }
 
-        public virtual void OnStageConnection(int depth)
+        public virtual void OnSceneConnection(int depth)
         {
-            Interop.CustomActorImpl.CustomActorImpl_OnStageConnection(swigCPtr, depth);
+            Interop.CustomActorImpl.CustomActorImpl_OnSceneConnection(swigCPtr, depth);
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        public virtual void OnStageDisconnection()
+        public virtual void OnSceneDisconnection()
         {
-            Interop.CustomActorImpl.CustomActorImpl_OnStageDisconnection(swigCPtr);
+            Interop.CustomActorImpl.CustomActorImpl_OnSceneDisconnection(swigCPtr);
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
@@ -114,30 +84,9 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        internal virtual bool OnTouchEvent(SWIGTYPE_p_Dali__TouchEvent arg0)
-        {
-            bool ret = Interop.CustomActorImpl.CustomActorImpl_OnTouchEvent(swigCPtr, SWIGTYPE_p_Dali__TouchEvent.getCPtr(arg0));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            return ret;
-        }
-
-        public virtual bool OnHoverEvent(Hover arg0)
-        {
-            bool ret = Interop.CustomActorImpl.CustomActorImpl_OnHoverEvent(swigCPtr, Hover.getCPtr(arg0));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            return ret;
-        }
-
         public virtual bool OnKeyEvent(Key arg0)
         {
             bool ret = Interop.CustomActorImpl.CustomActorImpl_OnKeyEvent(swigCPtr, Key.getCPtr(arg0));
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            return ret;
-        }
-
-        public virtual bool OnWheelEvent(Wheel arg0)
-        {
-            bool ret = Interop.CustomActorImpl.CustomActorImpl_OnWheelEvent(swigCPtr, Wheel.getCPtr(arg0));
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
             return ret;
         }
@@ -235,7 +184,5 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
             return ret;
         }
-
     }
-
 }

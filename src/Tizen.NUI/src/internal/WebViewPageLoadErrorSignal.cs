@@ -17,68 +17,13 @@
 
 namespace Tizen.NUI
 {
-    internal class WebViewPageLoadErrorSignal : global::System.IDisposable
+    internal class WebViewPageLoadErrorSignal : Disposable
     {
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
-        internal static global::System.Runtime.InteropServices.HandleRef getCPtr(WebViewPageLoadErrorSignal obj)
+
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
-        }
-
-        //A Flag to check who called Dispose(). (By User or DisposeQueue)
-        private bool isDisposeQueued;
-        //A Flat to check if it is already disposed.
-        protected bool disposed;
-
-        ~WebViewPageLoadErrorSignal()
-        {
-            if (!isDisposeQueued)
-            {
-                isDisposeQueued = true;
-                DisposeQueue.Instance.Add(this);
-            }
-        }
-
-        public void Dispose()
-        {
-            if (isDisposeQueued)
-            {
-                Dispose(false);
-            }
-            else
-            {
-                Dispose(true);
-                System.GC.SuppressFinalize(this);
-            }
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                //Called by User
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //because the execution order of Finalizes is non-deterministic.
-
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                Interop.WebView.delete_WebViewPageLoadErrorSignal(swigCPtr);
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-
-            disposed = true;
+            Interop.WebView.delete_WebViewPageLoadErrorSignal(swigCPtr);
         }
 
         public void Connect(System.Delegate func)
@@ -105,11 +50,8 @@ namespace Tizen.NUI
             }
         }
 
-        public WebViewPageLoadErrorSignal(global::System.IntPtr cPtr)
+        public WebViewPageLoadErrorSignal(global::System.IntPtr cPtr) : base(cPtr, true)
         {
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
         }
-
     }
-
 }

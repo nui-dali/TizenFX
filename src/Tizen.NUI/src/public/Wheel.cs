@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2017 Samsung Electronics Co., Ltd.
+ * Copyright(c) 2020 Samsung Electronics Co., Ltd.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,11 @@
  * limitations under the License.
  *
  */
+using System.ComponentModel;
+using Tizen.NUI.BaseComponents;
 
 namespace Tizen.NUI
 {
-
     /// <summary>
     /// The wheel event structure is used to store a wheel rolling, it facilitates processing of the wheel rolling and passing to other libraries like Toolkit.<br />
     /// There is a key modifier which relates to keys like Alt, Shift, and Ctrl functions are supplied to check if they have been pressed when the wheel is being rolled.<br />
@@ -25,30 +26,14 @@ namespace Tizen.NUI
     /// The mouse wheel event can be sent to the specific actor but the custom wheel event will be sent to the window.<br />
     /// </summary>
     /// <since_tizen> 3 </since_tizen>
-    public class Wheel : global::System.IDisposable
+    public class Wheel : BaseHandle
     {
-        /// <summary>
-        /// swigCMemOwn.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        protected bool swigCMemOwn;
-
-        /// <summary>
-        /// A Flat to check if it is already disposed.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        protected bool disposed = false;
-
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
-
-        //A Flag to check who called Dispose(). (By User or DisposeQueue)
-        private bool isDisposeQueued = false;
 
         /// <summary>
         /// The default constructor.
         /// </summary>
         /// <since_tizen> 3 </since_tizen>
-        public Wheel() : this(Interop.Wheel.new_Wheel__SWIG_0(), true)
+        public Wheel() : this(Interop.Wheel.Wheel_New(0, 0, 0u, Vector2.getCPtr(new Vector2(0.0f, 0.0f)), 0, 0u), true)
         {
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
@@ -63,28 +48,13 @@ namespace Tizen.NUI
         /// <param name="z">The offset of rolling (positive value means roll down or clockwise, and negative value means roll up or counter-clockwise).</param>
         /// <param name="timeStamp">The time the wheel is being rolled.</param>
         /// <since_tizen> 3 </since_tizen>
-        public Wheel(Wheel.WheelType type, int direction, uint modifiers, Vector2 point, int z, uint timeStamp) : this(Interop.Wheel.new_Wheel__SWIG_1((int)type, direction, modifiers, Vector2.getCPtr(point), z, timeStamp), true)
+        public Wheel(Wheel.WheelType type, int direction, uint modifiers, Vector2 point, int z, uint timeStamp) : this(Interop.Wheel.Wheel_New((int)type, direction, modifiers, Vector2.getCPtr(point), z, timeStamp), true)
         {
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
-        internal Wheel(global::System.IntPtr cPtr, bool cMemoryOwn)
+        internal Wheel(global::System.IntPtr cPtr, bool cMemoryOwn) : base(Interop.Wheel.Wheel_SWIGUpcast(cPtr), cMemoryOwn)
         {
-            swigCMemOwn = cMemoryOwn;
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
-        }
-
-        /// <summary>
-        /// Destructor.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        ~Wheel()
-        {
-            if(!isDisposeQueued)
-            {
-                isDisposeQueued = true;
-                DisposeQueue.Instance.Add(this);
-            }
         }
 
         /// <summary>
@@ -180,11 +150,6 @@ namespace Tizen.NUI
 
         private Wheel.WheelType type
         {
-            set
-            {
-                Interop.Wheel.Wheel_type_set(swigCPtr, (int)value);
-                if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            }
             get
             {
                 Wheel.WheelType ret = (Wheel.WheelType)Interop.Wheel.Wheel_type_get(swigCPtr);
@@ -195,11 +160,6 @@ namespace Tizen.NUI
 
         private int direction
         {
-            set
-            {
-                Interop.Wheel.Wheel_direction_set(swigCPtr, value);
-                if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            }
             get
             {
                 int ret = Interop.Wheel.Wheel_direction_get(swigCPtr);
@@ -210,11 +170,6 @@ namespace Tizen.NUI
 
         private uint modifiers
         {
-            set
-            {
-                Interop.Wheel.Wheel_modifiers_set(swigCPtr, value);
-                if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            }
             get
             {
                 uint ret = Interop.Wheel.Wheel_modifiers_get(swigCPtr);
@@ -225,11 +180,6 @@ namespace Tizen.NUI
 
         private Vector2 point
         {
-            set
-            {
-                Interop.Wheel.Wheel_point_set(swigCPtr, Vector2.getCPtr(value));
-                if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            }
             get
             {
                 global::System.IntPtr cPtr = Interop.Wheel.Wheel_point_get(swigCPtr);
@@ -241,14 +191,9 @@ namespace Tizen.NUI
 
         private int z
         {
-            set
-            {
-                Interop.Wheel.Wheel_z_set(swigCPtr, value);
-                if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            }
             get
             {
-                int ret = Interop.Wheel.Wheel_z_get(swigCPtr);
+                int ret = Interop.Wheel.Wheel_delta_get(swigCPtr);
                 if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
                 return ret;
             }
@@ -256,11 +201,6 @@ namespace Tizen.NUI
 
         private uint timeStamp
         {
-            set
-            {
-                Interop.Wheel.Wheel_timeStamp_set(swigCPtr, value);
-                if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            }
             get
             {
                 uint ret = Interop.Wheel.Wheel_timeStamp_get(swigCPtr);
@@ -306,29 +246,6 @@ namespace Tizen.NUI
             return ret;
         }
 
-        /// <summary>
-        /// Dispose.
-        /// </summary>
-        /// <since_tizen> 3 </since_tizen>
-        public void Dispose()
-        {
-            //Throw excpetion if Dispose() is called in separate thread.
-            if (!Window.IsInstalled())
-            {
-                throw new System.InvalidOperationException("This API called from separate thread. This API must be called from MainThread.");
-            }
-
-            if (isDisposeQueued)
-            {
-                Dispose(DisposeTypes.Implicit);
-            }
-            else
-            {
-                Dispose(DisposeTypes.Explicit);
-                System.GC.SuppressFinalize(this);
-            }
-        }
-
         internal static global::System.Runtime.InteropServices.HandleRef getCPtr(Wheel obj)
         {
             return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
@@ -336,46 +253,20 @@ namespace Tizen.NUI
 
         internal static Wheel GetWheelFromPtr(global::System.IntPtr cPtr)
         {
-            Wheel ret = new Wheel(cPtr, false);
+            Wheel ret = Registry.GetManagedBaseHandleFromNativePtr(cPtr) as Wheel;
+            if (ret == null)
+            {
+                ret = new Wheel(cPtr, false);
+            }
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
             return ret;
         }
 
-        /// <summary>
-        /// Dispose.
-        /// </summary>
-        /// <param name="type">The type dispose, it could be from user, or called by DisposeQueue.</param>
-        /// <since_tizen> 3 </since_tizen>
-        protected virtual void Dispose(DisposeTypes type)
+        /// This will not be public opened.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (type == DisposeTypes.Explicit)
-            {
-                //Called by User
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //because the execution order of Finalizes is non-deterministic.
-
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                if (swigCMemOwn)
-                {
-                    swigCMemOwn = false;
-                    Interop.Wheel.delete_Wheel(swigCPtr);
-                }
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-            disposed = true;
+            Interop.Wheel.delete_Wheel(swigCPtr);
         }
-
     }
-
 }

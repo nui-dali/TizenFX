@@ -36,7 +36,6 @@ namespace Tizen.NUI
     [EditorBrowsable(EditorBrowsableState.Never)]
     public class PixelBuffer : BaseHandle
     {
-        private global::System.Runtime.InteropServices.HandleRef swigCPtr;
 
         /// <summary>
         /// Create a PixelBuffer with its own data buffer.
@@ -59,7 +58,6 @@ namespace Tizen.NUI
 
         internal PixelBuffer(global::System.IntPtr cPtr, bool cMemoryOwn) : base(Interop.PixelBuffer.PixelBuffer_SWIGUpcast(cPtr), cMemoryOwn)
         {
-            swigCPtr = new global::System.Runtime.InteropServices.HandleRef(this, cPtr);
         }
 
         /// <summary>
@@ -247,6 +245,33 @@ namespace Tizen.NUI
             if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
         }
 
+        /// <summary>
+        /// Rotate the buffer by the given angle.
+        /// </summary>
+        /// <param name="angle">The angle in degrees.</param>
+        /// <since_tizen> 8 </since_tizen>
+        /// This will be public opened in tizen_6.0 after ACR done. Before ACR, need to be hidden as inhouse API.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool Rotate(Degree angle)
+        {
+            bool ret = Interop.PixelBuffer.PixelBuffer_Rotate(swigCPtr, Degree.getCPtr(angle));
+            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+            return ret;
+        }
+
+        /// <summary>
+        ///  Gets the pixel buffer
+        /// </summary>
+        /// <since_tizen> 8 </since_tizen>
+        /// This will be public opened in tizen_6.0 after ACR done. Before ACR, need to be hidden as inhouse API.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public global::System.IntPtr GetBuffer()
+        {
+            global::System.IntPtr ret = Interop.PixelBuffer.PixelBuffer_GetBuffer(swigCPtr);
+            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
+            return ret;
+        }
+
         internal static global::System.Runtime.InteropServices.HandleRef getCPtr(PixelBuffer obj)
         {
             return (obj == null) ? new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero) : obj.swigCPtr;
@@ -259,49 +284,13 @@ namespace Tizen.NUI
             return ret;
         }
 
-        internal SWIGTYPE_p_unsigned_char GetBuffer()
+
+
+        /// This will not be public opened.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        protected override void ReleaseSwigCPtr(System.Runtime.InteropServices.HandleRef swigCPtr)
         {
-            global::System.IntPtr cPtr = Interop.PixelBuffer.PixelBuffer_GetBuffer(swigCPtr);
-            SWIGTYPE_p_unsigned_char ret = (cPtr == global::System.IntPtr.Zero) ? null : new SWIGTYPE_p_unsigned_char(cPtr, false);
-            if (NDalicPINVOKE.SWIGPendingException.Pending) throw NDalicPINVOKE.SWIGPendingException.Retrieve();
-            return ret;
+            Interop.PixelBuffer.delete_PixelBuffer(swigCPtr);
         }
-
-        /// <summary>
-        /// Dispose.
-        /// </summary>
-        /// <since_tizen> 5 </since_tizen>
-        protected override void Dispose(DisposeTypes type)
-        {
-            if (disposed)
-            {
-                return;
-            }
-
-            if (type == DisposeTypes.Explicit)
-            {
-                //Called by User.
-                //Release your own managed resources here.
-                //You should release all of your own disposable objects here.
-
-            }
-
-            //Release your own unmanaged resources here.
-            //You should not access any managed member here except static instance.
-            //Because the execution order of Finalizes is non-deterministic.
-            if (swigCPtr.Handle != global::System.IntPtr.Zero)
-            {
-                if (swigCMemOwn)
-                {
-                    swigCMemOwn = false;
-                    Interop.PixelBuffer.delete_PixelBuffer(swigCPtr);
-                }
-                swigCPtr = new global::System.Runtime.InteropServices.HandleRef(null, global::System.IntPtr.Zero);
-            }
-
-            base.Dispose(type);
-        }
-
     }
-
 }

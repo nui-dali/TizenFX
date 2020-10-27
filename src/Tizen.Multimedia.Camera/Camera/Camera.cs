@@ -50,15 +50,12 @@ namespace Tizen.Multimedia
         /// Initializes a new instance of the <see cref="Camera"/> class.
         /// </summary>
         /// <param name="device">The camera device to access.</param>
+        /// <exception cref="ArgumentException">Invalid CameraDevice type.</exception>
+        /// <exception cref="NotSupportedException">The camera feature is not supported.</exception>
         /// <since_tizen> 3 </since_tizen>
         /// <feature> http://tizen.org/feature/camera </feature>
         public Camera(CameraDevice device)
         {
-            if (!Features.IsSupported(CameraFeatures.Camera))
-            {
-                throw new NotSupportedException("Camera feature is not supported.");
-            }
-
             Native.Create(device, out _handle).ThrowIfFailed("Failed to create camera instance");
 
             Capabilities = new CameraCapabilities(this);
@@ -397,7 +394,7 @@ namespace Tizen.Multimedia
         {
             if (display == null)
             {
-                return CameraDisplay.SetTarget(GetHandle(), DisplayType.None, IntPtr.Zero);
+                return CameraDisplay.SetDisplay(GetHandle(), DisplayType.None, IntPtr.Zero);
             }
 
             return display.ApplyTo(this);
@@ -455,12 +452,14 @@ namespace Tizen.Multimedia
             Debug.Assert(_disposed == false);
             ValidationUtil.ValidateEnum(typeof(DisplayType), type, nameof(type));
 
-            return CameraDisplay.SetTarget(GetHandle(), type, evasObject);
+            return CameraDisplay.SetDisplay(GetHandle(), type, evasObject);
         }
 
         CameraError IDisplayable<CameraError>.ApplyEcoreWindow(IntPtr windowHandle)
         {
-            throw new NotSupportedException("Camera does not support NUI.Window display.");
+            Debug.Assert(_disposed == false);
+
+            return CameraDisplay.SetEcoreDisplay(GetHandle(), windowHandle);
         }
 
         /// <summary>
@@ -831,6 +830,8 @@ namespace Tizen.Multimedia
         /// <exception cref="UnauthorizedAccessException">In case of access to the resources cannot be granted.</exception>
         public void StopFaceDetection()
         {
+            ValidateNotDisposed();
+
             if (_faceDetectedCallback == null)
             {
                 throw new InvalidOperationException("The face detection is not started.");
